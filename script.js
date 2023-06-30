@@ -23,15 +23,19 @@ function generatePassword() {
   const specialChars = ["!", "@", "#", "$", "%", "^", "&", "*", "(", ")", "-", "_", "=", "+", ",", "<", ".", ">", "/", "?", ";", ":", '"', "'", "[", "{", "]", "}", "\\", "|", "`", "~" ];
 
   // gather selection choices from user
-  var characters = window.prompt("Number of characters: (8-24)");
+  var characters = window.prompt("Number of characters: (8-128)");
+
+  while ( (characters < 8) || (characters > 128) ) {
+    characters = window.prompt("Number of characters: (8-128)");
+  }
   var hasSpecial = window.confirm("Include special characters?");
   var hasNumber = window.confirm("Include numbers?");
   var hasUpper = window.confirm("Include uppercase characters?");
   var hasLower = window.confirm("Include lowercase characters?");
 
   while ( !(hasUpper || hasLower) ) {
-    var hasUpper = window.confirm("Include uppercase characters?");
-    var hasLower = window.confirm("Include lowercase characters?");
+    hasUpper = window.confirm("Include uppercase characters?");
+    hasLower = window.confirm("Include lowercase characters?");
   }
 
   // configure selection array
@@ -41,6 +45,13 @@ function generatePassword() {
   if (hasSpecial) { selection = selection.concat(specialChars); }
   if (hasNumber)  { selection = selection.concat(numbers); }
 
-  //
-  
+  // pull random elements from selection and push into password buffer 'characters' amount of times
+  var pwBuffer = [];
+  for (i = 0; i < characters; i++) {
+    pwBuffer.push( selection[Math.floor( Math.random() * selection.length )] );
   }
+
+  // return the password buffer array as a string
+  pwBuffer = pwBuffer.join("");
+  return pwBuffer;
+}
