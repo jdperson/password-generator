@@ -22,7 +22,7 @@ function generatePassword() {
   var characters = window.prompt("Number of characters: (8-128)");
 
   while ( (characters < 8) || (characters > 128) ) {
-    characters = window.prompt("Number of characters: (8-128)");
+      characters = window.prompt("Number of characters: (8-128)");
   }
 
   var selection = [];
